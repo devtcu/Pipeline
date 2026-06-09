@@ -15,6 +15,13 @@ from airflow.operators.bash import BashOperator #we can use this to operate bash
 
 from datetime import datetime
 
+""" 
+When a PythonOperator task finishes, its return value is automatically saved
+  to Airflow's database (Postgres) tagged with the task ID. That's XCom push —
+  it happens implicitly.
+  
+  xcom_pull is how you retrieve those saved values in a later task:
+"""
 def _choose_best_model(ti): #ti is tank instance object
     accuracies = ti.xcom_pull(task_ids=[
         'training_model_A',
@@ -28,7 +35,7 @@ def _choose_best_model(ti): #ti is tank instance object
     return 'inaccurate'
 
 def _training_model():
-    #lets return fak garbage for test
+    #lets return fake garbage for test
     return randint(1,10)
 
 
@@ -38,7 +45,7 @@ def _training_model():
 # parameters of DAG (Uniqe identifier, start date, schedule interval, catchup)
 #the last paramter "catchup" should be set to false if you dont want the DAG to create an instance
 #for everyday since the start date nand the current date
-with DAG("my_dag", start_date=datetime(2026, 1, 1), schedule="@daily", catchup=False) as dag: #with gauarantees exitm as opposed to not using it. CONTEXT MANAGER
+with DAG("my_dag", start_date=datetime(2026, 1, 1), description="training models", tags=["test case"], schedule="@daily", catchup=False): #with gauarantees exitm as opposed to not using it. CONTEXT MANAGER
     
     #lets create a task!
     training_model_A = PythonOperator(

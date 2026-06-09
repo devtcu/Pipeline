@@ -1,4 +1,4 @@
-  logs/
-  log/
-  config/airflow.cfg
-  dags/__pycache__/
+logs/
+log/
+config/airflow.cfg
+dags/__pycache__/
