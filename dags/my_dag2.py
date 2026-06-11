@@ -3,12 +3,12 @@
 
 from airflow import DAG
 from random import randint
-from airflow.decorators import task #new task Decorator
+from airflow.decorators import dag, task #new task Decorator
 from airflow.operators.bash import BashOperator
 from datetime import datetime
 
 
-with DAG("my_dag2", start_date=datetime(2026, 1, 1), description="training models", tags=["test case"], schedule="@daily", catchup=False): #with gauarantees exitm as opposed to not using it. CONTEXT MANAGER
+@dag("my_dag2", start_date=datetime(2026, 1, 1), description="training models", tags=["test case"], schedule="@daily", catchup=False): #with gauarantees exitm as opposed to not using it. CONTEXT MANAGER
     
     
     @task #this is a decorator - now below we can define the function that PythonOperator used to execute
