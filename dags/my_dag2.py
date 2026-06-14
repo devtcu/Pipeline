@@ -6,8 +6,8 @@ from airflow.operators.bash import BashOperator
 from datetime import datetime
 
 
-@dag(start_date=datetime(2026, 1, 1), description="training models", tags=["test case"], schedule="@daily", catchup=False) #with gauarantees exitm as opposed to not using it. CONTEXT MANAGER
-def my_dag2():
+@dag(start_date=datetime(2026, 1, 1), description="training models", tags=["test case"], schedule="None", catchup=False)
+def my_dag2(): #change schedule to "@daily"
 
     @task #this is a decorator - now below we can define the function that PythonOperator used to execute
     def _training_model(accuracy): #this is a task with TaskID=_training_model
